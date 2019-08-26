@@ -10,7 +10,7 @@ node('master') {
   target_branch = "${env.CHANGE_TARGET}"
 
   // for now we will only build master branch
-  if (target_branch =~ /master/) {
+  if (target_branch == "master") {
     skip_build = false
     println "Jenkinss: targt branch -- ${target_branch}"
 //    pullRequest.comment("Jenkinss: targt branch -- ${target_branch}")
