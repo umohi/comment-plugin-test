@@ -12,13 +12,11 @@ node('master') {
   // for now we will only build master branch
   if (target_branch == "master") {
     skip_build = false
-    println "Jenkinss: targt branch -- ${target_branch}"
-//    pullRequest.comment("DOING: targt branch -- ${target_branch}")
+    println "DOING: targt branch -- ${target_branch}"
   }
   else {
     skip_build = true
-    println "Jenkinss: targt branch -- ${target_branch}"
-//    pullRequest.comment("SKIPPING: targt branch -- ${target_branch}")
+    println "SKIPPING: targt branch -- ${target_branch}"
   }
  }
 }
