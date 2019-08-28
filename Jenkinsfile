@@ -4,6 +4,7 @@ node('master') {
 	     myVar = sh (script: './ci/lookup-test-suite test_suite1', returnStdout: true).trim()
         }
  	echo "${myVar}"
+	echo "test suite ------> ${env.testsuite}"
  }
 }
 
