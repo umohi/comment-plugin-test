@@ -1,0 +1,32 @@
+#!/bin/bash -e
+
+supported_test_suites=(
+    test_suite1
+    test_suite2
+)
+
+test_suite1=(
+	a
+	b
+	c
+)
+
+test_suite2=(
+	c
+)
+
+ts_supported="no"
+for i in "${supported_test_suites[@]}"; do
+    if [ "$1" == "$i" ]; then
+	ts_supported="yes"
+    fi
+done
+
+# if test suite not supported return error message
+if [ $ts_supported == "yes" ]; then
+    echo ${test_suite1[@]}
+else
+    echo "$1 is not a supported test suite"
+    exit 1
+fi
+# return list of tests in test
