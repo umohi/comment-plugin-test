@@ -4,7 +4,9 @@ pipeline {
        stage('build') {
             steps {
                 sh 'env'
-		myVar = sh (script: './ci/lookup-test-suite test_suite1', returnStdout: true).trim()
+		script {
+		       myVar = sh (script: './ci/lookup-test-suite test_suite1', returnStdout: true).trim()
+		}
 		echo "${myVar}"
             }
         }
