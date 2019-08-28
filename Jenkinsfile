@@ -2,6 +2,7 @@ node('master') {
  stage('Test suite') {
 	script {
 	     myVar = sh (script: "./ci/lookup-test-suite ${env.testsuite}", returnStdout: true).trim()
+	     myArr = myVar.split()
         }
  	echo "${myVar}"
 	echo "test suite ------> ${env.testsuite}"
@@ -19,7 +20,7 @@ pipeline {
        stage('Test Suite Execution') {
             steps {
                script {
- 	         for (int i = 0; i < myVar.length; i++) {
+ 	         for (int i = 0; i < myArr.length; i++) {
     	    	    stage("Test ${myVar[i]}") {
             	      sh 'yo'
     	            }
