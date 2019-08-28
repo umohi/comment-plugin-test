@@ -17,13 +17,15 @@ pipeline {
             }
         }
        stage('Test Suite Execution') {
-            script {
- 	      for (int i = 0; i < myVar.length; i++) {
-    	    	 stage("Test ${myVar[i]}") {
-            	   sh 'yo'
-    	         }
-	      }
-            }
+            steps {
+               script {
+ 	         for (int i = 0; i < myVar.length; i++) {
+    	    	    stage("Test ${myVar[i]}") {
+            	      sh 'yo'
+    	            }
+	         }
+               }
+	    }
         }
     }// stages
 } //pipeline
