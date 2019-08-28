@@ -1,7 +1,7 @@
 node('master') {
  stage('Test suite') {
 	script {
-	     myVar = sh (script: './ci/lookup-test-suite test_suite1', returnStdout: true).trim()
+	     myVar = sh (script: "./ci/lookup-test-suite ${env.testsuite}", returnStdout: true).trim()
         }
  	echo "${myVar}"
 	echo "test suite ------> ${env.testsuite}"
