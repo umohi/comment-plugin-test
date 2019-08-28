@@ -21,6 +21,11 @@ pipeline {
             steps {
                script {
  	         for (int i = 0; i < myArr.length; i++) {
+		    stage("Test ${myVar[i]}") {
+		    	echo "[__ ${myVar[i]} __]"
+		    }
+		 }
+ 	         for (int i = 0; i < myArr.length; i++) {
     	    	    stage("Test ${myVar[i]}") {
             	      sh "./ci/${myVar[i]}"
     	            }

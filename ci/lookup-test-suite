@@ -15,18 +15,14 @@ test_suite2=(
 	c
 )
 
-ts_supported="no"
-for i in "${supported_test_suites[@]}"; do
-    if [ "$1" == "$i" ]; then
-	ts_supported="yes"
-    fi
-done
-
-# if test suite not supported return error message
-if [ $ts_supported == "yes" ]; then
+if [ "$1" == "test_suite1" ]; then
     echo ${test_suite1[@]}
-else
-    echo "$1 is not a supported test suite"
-    exit 1
+    exit 0
+elif [ "$1" == "test_suite2" ]; then
+    echo ${test_suite2[@]}
+    exit 0
 fi
-# return list of tests in test
+
+echo "$1 is not a supported test suite"
+exit 1
+
