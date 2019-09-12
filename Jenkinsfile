@@ -1,12 +1,26 @@
+/**
+ * Libraries contain reusabile snippets that can be reused across multiple projects.
+ */
+@Library('bf-jenkins-utils@develop')_
+
+
 node('github-pr-builder') {
 
-docker.withRegistry('https://artifacts.barefootnetworks.com:9444', 'nexus-docker-creds') {
-    docker.image("artifacts.barefootnetworks.com:9444/bf/p4factory:master").inside('--privileged --cap-add=ALL  --user=root') {
-      sh 'cd /sandals; git fetch ; git checkout DEV-269-testsuite-framework'
-      myVar = sh (script: "/sandals/sde-test/docker/testsuite-generator.py ${env.testsuite}", returnStdout: true).trim()
-      myArr = myVar.tokenize()
+    if (env.testsuite != null) {
+        if (! validateTestSuiteName(env.testsuite)) {
+          pullRequest.comment("Jenkins: ${env.testsuite} is not a recognized testsuite")
+        }
     }
-} // docker
+    
+  docker.withRegistry('https://artifacts.barefootnetworks.com:9444', 'nexus-docker-creds') {
+      docker.image("artifacts.barefootnetworks.com:9444/bf/p4factory:master").inside('--privileged --cap-add=ALL  --user=root') {
+        sh 'cd /sandals; git fetch ; git checkout DEV-269-testsuite-framework'
+        myVar = sh (script: "/sandals/sde-test/docker/testsuite-generator.py ${env.testsuite}", returnStdout: true).trim()
+        myArr = myVar.tokenize()
+      }
+
+
+  } // docker
 
 } //node
 
