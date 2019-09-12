@@ -52,9 +52,10 @@ pipeline {
                     }
                 }
             steps {
-                script {
-                    parallel extraTestStages
-                }
+                // script {
+                //     parallel extraTestStages
+                // }
+                echo "hello world"
             }
         }
     }// stages
