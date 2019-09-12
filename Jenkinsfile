@@ -9,9 +9,10 @@ node('github-pr-builder') {
     if (env.testsuite != null) {
         if (! validateTestSuiteName(env.testsuite)) {
           pullRequest.comment("Jenkins: ${env.testsuite} is not a recognized testsuite")
+          println "Jenkins: ${env.testsuite} is not a recognized testsuite"
         }
     }
-    
+
   docker.withRegistry('https://artifacts.barefootnetworks.com:9444', 'nexus-docker-creds') {
       docker.image("artifacts.barefootnetworks.com:9444/bf/p4factory:master").inside('--privileged --cap-add=ALL  --user=root') {
         sh 'cd /sandals; git fetch ; git checkout DEV-269-testsuite-framework'
