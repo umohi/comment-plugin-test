@@ -59,7 +59,9 @@ pipeline {
                 }
             steps {
                 script {
+                  pullRequest.comment("Jenkins: about to run testsuite")
                   if (runExtraTestSuites == true) { 
+                    pullRequest.comment("Jenkins: running testsuite")
                     getTestSuiteSteps(testsuite)
                   }
                 }
