@@ -4,9 +4,9 @@
 @Library('bf-jenkins-utils@develop')_
 
 
+def runExtraTestSuites = false
 node('github-pr-builder') {
     testsuite = env.testsuite
-    def runExtraTestSuites = false
     if (testsuite != null) {
         if (! validateTestSuiteName(testsuite)) {
           pullRequest.comment("Jenkins: ${testsuite} is not a recognized testsuite")
