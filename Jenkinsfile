@@ -10,12 +10,12 @@ node('github-pr-builder') {
     if (testsuite != null) {
         if (! validateTestSuiteName(testsuite)) {
           pullRequest.comment("Jenkins: ${testsuite} is not a recognized testsuite")
-          println "Jenkins: ${testsuite} is not a recognized testsuite"
+          echo "Jenkins: ${testsuite} is not a recognized testsuite"
           currentBuild.result = 'UNSTABLE'
         }
         else {
           runExtraTestSuites = true
-          println "Jenkins: recognized VALID testsuite"
+          echo "Jenkins: recognized VALID testsuite"
         }
     }
 
