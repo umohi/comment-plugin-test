@@ -6,7 +6,7 @@
 
 node('github-pr-builder') {
     testsuite = env.testsuite
-    runExtraTestSuites = false
+    def runExtraTestSuites = false
     if (testsuite != null) {
         if (! validateTestSuiteName(testsuite)) {
           pullRequest.comment("Jenkins: ${testsuite} is not a recognized testsuite")
