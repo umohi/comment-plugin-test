@@ -10,7 +10,7 @@ node('github-pr-builder') {
         if (! validateTestSuiteName(env.testsuite)) {
           pullRequest.comment("Jenkins: ${env.testsuite} is not a recognized testsuite")
           println "Jenkins: ${env.testsuite} is not a recognized testsuite"
-          currentBuild.currentResult = 'UNSTABLE'
+          currentBuild.result = 'UNSTABLE'
         }
     }
 
