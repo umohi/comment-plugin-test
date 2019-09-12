@@ -1,37 +1,46 @@
-node('master') {
- stage('Test suite') {
-	script {
-	     myVar = sh (script: "./ci/lookup-test-suite ${env.testsuite}", returnStdout: true).trim()
-	     myArr = myVar.split()
-        }
- 	echo "${myVar}"
-	echo "test suite ------> ${env.testsuite}"
- }
-}
+node('github-pr-builder') {
+
+docker.withRegistry('https://artifacts.barefootnetworks.com:9444', 'nexus-docker-creds') {
+    docker.image("artifacts.barefootnetworks.com:9444/bf/p4factory:master").inside('--privileged --cap-add=ALL  --user=root') {
+      sh 'cd /sandals; git fetch ; git checkout DEV-269-testsuite-framework'
+      myVar = sh (script: "/sandals/sde-test/docker/testsuite-generator.py ${env.testsuite}", returnStdout: true).trim()
+      myArr = myVar.tokenize()
+    }
+} // docker
+
+} //node
+
+def extraTestStages = [failFast: true]
+  for (int i = 0; i < myArr.size(); i++) {
+    def vmNumber = i //alias the loop variable to refer it in the closure
+    script_name = "${myArr[i]}"
+    extraTestStages["Running Testsuite ${myArr[i]}"] = {
+      stage("Running Tests Script ${myArr[i]}") {
+        sh 'hostname; cd /sandals; sleep $(shuf -i 10-39 -n 1); git fetch ; git checkout DEV-269-testsuite-framework; cd -'
+        sh "/sandals/sde-test/docker/testsuite-generator.py"
+        sh "BRANCH=master /sandals/sde-test/docker/${script_name}"
+      }
+    }
+  }
 
 pipeline {
-   agent { docker { image 'maven:3.3.3' } }
+    agent none
    stages {
-       stage('build') {
+       stage('parallel stage') {
+           agent {
+                    docker {
+                        label 'github-pr-builder'
+                        image "artifacts.barefootnetworks.com:9444/bf/p4factory:master"
+                        registryUrl 'https://artifacts.barefootnetworks.com:9444'
+                        registryCredentialsId 'nexus-docker-creds'
+                        args '--privileged --cap-add=ALL  --user=root'
+                    }
+                }
             steps {
-                sh 'env'
+                script {
+                    parallel extraTestStages
+                }
             }
-        }
-       stage('Test Suite Execution') {
-            steps {
-               script {
- 	         for (int i = 0; i < myArr.length; i++) {
-		    stage("Test ${myVar[i]}") {
-		    	echo "[__ ${myVar[i]} __]"
-		    }
-		 }
- 	         for (int i = 0; i < myArr.length; i++) {
-    	    	    stage("Test ${myVar[i]}") {
-            	      sh "./ci/${myVar[i]}"
-    	            }
-	         }
-               }
-	    }
         }
     }// stages
 } //pipeline
