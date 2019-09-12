@@ -5,12 +5,15 @@
 
 
 node('github-pr-builder') {
-
-    if (env.testsuite != null) {
-        if (! validateTestSuiteName(env.testsuite)) {
-          pullRequest.comment("Jenkins: ${env.testsuite} is not a recognized testsuite")
-          println "Jenkins: ${env.testsuite} is not a recognized testsuite"
+    testsuite = env.testsuite
+    if (testsuite != null) {
+        if (! validateTestSuiteName(testsuite)) {
+          pullRequest.comment("Jenkins: ${testsuite} is not a recognized testsuite")
+          println "Jenkins: ${testsuite} is not a recognized testsuite"
           currentBuild.result = 'UNSTABLE'
+        }
+        else {
+          runExtraTestSuites = true
         }
     }
 
@@ -40,7 +43,7 @@ def extraTestStages = [failFast: true]
   }
 
 pipeline {
-    agent none
+   agent none
    stages {
        stage('parallel stage') {
            agent {
@@ -53,10 +56,11 @@ pipeline {
                     }
                 }
             steps {
-                // script {
-                //     parallel extraTestStages
-                // }
-                echo "hello world"
+                script {
+                  if (runExtraTestSuites == true) { 
+                    getTestSuiteSteps(testsuite)
+                  }
+                }
             }
         }
     }// stages
