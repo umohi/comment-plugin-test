@@ -15,6 +15,7 @@ node('github-pr-builder') {
         }
         else {
           runExtraTestSuites = true
+          println "Jenkins: recognized VALID testsuite"
         }
     }
 
