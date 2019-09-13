@@ -17,8 +17,6 @@ node('github-pr-builder') {
         }
     }
 
-  } // docker
-
 } //node
 
 
