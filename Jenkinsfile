@@ -1,7 +1,7 @@
 /**
  * Libraries contain reusabile snippets that can be reused across multiple projects.
  */
-@Library('bf-jenkins-utils@develop')_
+@Library('emailUtil@develop')_
 
 
 def runExtraTestSuites = false
