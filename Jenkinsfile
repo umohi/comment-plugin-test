@@ -23,7 +23,7 @@ node('github-pr-builder') {
 pipeline {
    agent none
    stages {
-       stage('parallel stage') {
+       stage('Extra Test Suites') {
            agent {
                   docker {
                       label 'github-pr-builder'
@@ -39,6 +39,20 @@ pipeline {
                     parallel getTestSuiteSteps(testsuite)
                   }
                 }
+            }
+        }
+        stage('Extra Test Suites') {
+           agent {
+                  docker {
+                      label 'github-pr-builder'
+                      image "artifacts.barefootnetworks.com:9444/bf/p4factory:master"
+                      registryUrl 'https://artifacts.barefootnetworks.com:9444'
+                      registryCredentialsId 'nexus-docker-creds'
+                      args '--privileged --cap-add=ALL  --user=root'
+                  }
+                }
+            steps {
+               sh 'env' 
             }
         }
     }// stages
