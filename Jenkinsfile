@@ -26,7 +26,7 @@ pipeline {
        stage('Extra Test Suites') {
            agent {
                   docker {
-                      label 'github-pr-builder'
+                      label 'master'
                       image "artifacts.barefootnetworks.com:9444/bf/p4factory:master"
                       registryUrl 'https://artifacts.barefootnetworks.com:9444'
                       registryCredentialsId 'nexus-docker-creds'
@@ -44,7 +44,7 @@ pipeline {
         stage('Extra Test Suites2') {
            agent {
                   docker {
-                      label 'github-pr-builder'
+                      label 'master'
                       image "artifacts.barefootnetworks.com:9444/bf/p4factory:master"
                       registryUrl 'https://artifacts.barefootnetworks.com:9444'
                       registryCredentialsId 'nexus-docker-creds'
