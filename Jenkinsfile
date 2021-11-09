@@ -1,5 +1,5 @@
 /**
- * Libraries contain reusabile snippets that can be reused across multiple projects.
+ * Libraries contain reusabile snippets that can be reused across multiple projects
  */
 @Library('emailUtil@develop')_
 
