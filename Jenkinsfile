@@ -1,3 +1,4 @@
+//
 node {
     // This displays colors using the 'xterm' ansi color map.
     ansiColor('xterm') {
