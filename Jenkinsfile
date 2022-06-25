@@ -3,13 +3,10 @@
  */
 @Library('bf-jenkins-utils@master')_
 
+ node('master') {
+    pullRequest.comment("JIRA ID found in comments and/or PR title")
 
-
-// def runExtraTestSuites = false
-// node('master') {
-//    pullRequest.comment("JIRA ID found in comments and/or PR title")
-
-// } //node
+ } //node
 
 
 pipeline {
