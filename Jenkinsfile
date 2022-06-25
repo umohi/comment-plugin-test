@@ -4,8 +4,10 @@
 @Library('emailUtil@develop')_
 
 
+
 def runExtraTestSuites = false
 node('github-pr-builder') {
+    pullRequest.comment("JIRA ID found in comments and/or PR title")
     testsuite = env.testsuite
     if (testsuite != null) {
         if (! validateTestSuiteName(testsuite)) {
