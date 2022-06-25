@@ -5,10 +5,32 @@
 
 
 
-def runExtraTestSuites = false
-node('master') {
-    pullRequest.comment("JIRA ID found in comments and/or PR title")
+// def runExtraTestSuites = false
+// node('master') {
+//    pullRequest.comment("JIRA ID found in comments and/or PR title")
 
-} //node
+// } //node
 
 
+pipeline {
+
+  agent any
+
+  stages {
+    stage('Test') {
+      when { changeRequest() }
+      steps {
+        script {
+          echo "Current Pull Request ID: ${env.CHANGE_ID}"
+        }
+      }
+    }
+    stage('Test2') {
+      steps {
+        script {
+          pullRequest.comment("Test")
+        }
+      }
+    }
+  }
+}
