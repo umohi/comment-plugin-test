@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+supported_test_suites=(
+    test_suite1
+    test_suite2
+)
+
+test_suite1=(
+	a
+	b
+	c
+)
+
+test_suite2=(
+	c
+)
+
+if [ "$1" == "test_suite1" ]; then
+    echo ${test_suite1[@]}
+    exit 0
+elif [ "$1" == "test_suite2" ]; then
+    echo ${test_suite2[@]}
+    exit 0
+fi
+
+echo "$1 is not a supported test suite"
+exit 1
+
