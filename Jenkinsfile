@@ -1,7 +1,7 @@
 /**
  * Libraries contain reusabile snippets that can be reused across multiple projects
  */
-@Library('emailUtil@master')_
+@Library('bf-jenkins-utils@master')_
 
 
 
