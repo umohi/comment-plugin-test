@@ -6,7 +6,7 @@
 
 
 def runExtraTestSuites = false
-node('github-pr-builder') {
+node('master') {
     pullRequest.comment("JIRA ID found in comments and/or PR title")
 
 } //node
